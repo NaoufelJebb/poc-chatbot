@@ -1,0 +1,21 @@
+version: "3"
+services:
+    ollama:
+        image: ollama/ollama
+        restart: always
+        ports:
+            - "11434:11434"
+        volumes:
+            - ollama:/root/.ollama
+
+    ui:
+        image: ollama-chatbot
+        ports:
+            - "8080:3008"
+        environment:
+            - LLM_MODEL=gemma:2b-instruct
+        depends_on:
+            - ollama
+
+volumes:
+    ollama:
